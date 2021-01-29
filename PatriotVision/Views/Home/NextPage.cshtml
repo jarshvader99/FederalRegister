@@ -1,10 +1,12 @@
 ﻿@model PatriotVision.Models.Documents.DocumentsModel;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
 @{
-    ViewData["Title"] = "Home Page";
 }
 <div class="container no-search">
-    <div class="row justify-content-center mb-1 search-card">
-        <div class="col-md-6 mx-auto search-card-col">
+    <div class="row justify-content-center mb-1">
+        <div class="col-md-6 mx-auto">
             @foreach (var item in Model.results)
             {
 
@@ -25,8 +27,8 @@
             }
         </div>
     </div>
-    <div class="row justify-content-center next-btn">
-        <div class="col-md-6 mx-auto">
+    <div class="row col-8 mx-auto justify-content-center next-btn">
+        <div class="col-sm-3 col-md-2">
             @{
                 var newUrl = @Model.next_page_url.Substring(79);
 
@@ -36,8 +38,32 @@
                 {
                     if (!pageNmb.Contains("per_page"))
                     {
+                        int pageInt = int.Parse(pageNmb) - 1;
+                        if (pageInt == 2)
+                        {
+                            <a class="d-flex justify-content-center btn btn-primary" href="/">Back</a>
+                        }
+                        else
+                        {
+                            var backPage = pageInt - 1;
+                            <a class="d-flex justify-content-center btn btn-primary" href="/Home/NextPage?page=@backPage">Back</a>
+                        }
+                    }
+                }
+            }
+        </div>
+        <div class="col-sm-3 col-md-2">
+            @{
+                var newUrl2 = @Model.next_page_url.Substring(79);
 
-                        <a class="d-flex justify-content-center btn btn-primary" href="/Home/NextPage?page=@pageNmb">Next Page</a>
+                string[] pages2 = newUrl.Split("&");
+
+                foreach (var pageNmb in pages2)
+                {
+                    if (!pageNmb.Contains("per_page"))
+                    {
+
+                        <a class="d-flex justify-content-center btn btn-primary" href="/Home/NextPage?page=@pageNmb">Next</a>
 
                     }
                 }

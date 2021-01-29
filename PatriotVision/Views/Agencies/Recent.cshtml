@@ -1,0 +1,26 @@
+﻿@model PatriotVision.Models.Agencies.RecentMentions.RecentMentionModels;
+
+<div class="container no-search">
+    <div class="row justify-content-center mb-1">
+        <div class="col-md-6 mx-auto">
+            @foreach (var item in Model.results)
+            {
+
+                <div class="card card-body">
+                    <h5 class="card-title m-1"><a href="@item.html_url">@item.title</a></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Document Number: @item.document_number</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Publication Date: @item.publication_date</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Type: @item.type</h6>
+                    <p class="card-text">@item._abstract</p>
+                    @foreach (var agency in item.agencies)
+                    {
+                        <p>Agency: <a href="@agency.url">@agency.name</a></p>
+                    }
+                    <a href="@item.public_inspection_pdf_url" class="card-link">Public Inspection PDF</a>
+                    <a href="@item.pdf_url" class="card-link">View PDF</a>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
